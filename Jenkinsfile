@@ -4,12 +4,12 @@ pipeline {
     stage('Clone repository') {
       steps {
         checkout([$class: 'GitSCM',
-                                  branches: [[name: '*/master']],
-                                  doGenerateSubmoduleConfigurations: false,
-                                  extensions: [[$class: 'CloneOption', depth: 1],
-                                               [$class: 'GitHubAppCredentials', appId: '867979', installationId: 'jenkins-fax']],
-                                  submoduleCfg: [],
-                                  userRemoteConfigs: [[url: 'https://github.com/bayraak/webpack-font-preload-plugin.git']]])
+                                          branches: [[name: '*/master']],
+                                          doGenerateSubmoduleConfigurations: false,
+                                          extensions: [[$class: 'CloneOption', depth: 1],
+                                                       [$class: 'GitHubAppCredentials', appId: '867979', installationId: 'jenkins-fax']],
+                                          submoduleCfg: [],
+                                          userRemoteConfigs: [[url: 'https://github.com/bayraak/webpack-font-preload-plugin.git']]])
       }
     }
 
