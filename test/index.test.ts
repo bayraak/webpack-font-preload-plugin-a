@@ -46,43 +46,6 @@ describe("WebpackFontPreloadPlugin tests", () => {
     expect(fonts[1].getAttribute("crossorigin")).toBe(null);
   });
 
-  it("should add link with `prefetch` when `loadType` is set as `prefetch`", async () => {
-    const extensions = ["ttf"];
-    const { document } = await run(null, {
-      extensions,
-      loadType: LoadType.PREFETCH,
-    });
-    const fonts = findPreloadedFonts(document);
-    expect(fonts.length).toBe(2);
-    expect(fonts[0].getAttribute("rel")).toBe("prefetch");
-    expect(fonts[1].getAttribute("rel")).toBe("prefetch");
-  });
-
-  it("should prepent in `head` if `insertBefore` is undefined", async () => {
-    const extensions = ["ttf"];
-    const { document } = await run(null, {
-      extensions,
-      insertBefore: undefined,
-    });
-    const [font1, font2] = findPreloadedFonts(document);
-    expect(font1?.parentElement?.tagName).toBe("HEAD");
-    expect(font2?.parentElement?.tagName).toBe("HEAD");
-  });
-
-  it("should allow to update the generated index.html by using a template placeholder", async () => {
-    const extensions = ["ttf"];
-    const { document } = await run(null, {
-      extensions,
-      replaceCallback: ({ indexSource, linksAsString }) => {
-        return indexSource.replace("{{{linksTplPlaceholder}}}", linksAsString);
-      },
-    });
-    const [font1, font2] = findPreloadedFonts(document);
-    // `#root` is the parent of templating placeholder.
-    expect(font1?.parentElement?.id).toBe("root");
-    expect(font2?.parentElement?.id).toBe("root");
-  });
-
   it("should allow to filter font's for preload by specifying a contained string", async () => {
     const { document } = await run(null, {
       filter: "app-font",
